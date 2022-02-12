@@ -86,7 +86,7 @@ button{
 }
 
 .word-container {
-    width: 510px;
+    width: 255px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

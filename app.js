@@ -4,7 +4,7 @@ const wordDisplay = document.querySelector('.word-container')
 
 const letters = [
     'Q',
-    'W',
+    //'W',
     'E',
     'R',
     'T',
@@ -22,10 +22,10 @@ const letters = [
     'J',
     'K',
     'L',
-    'Z',
-    'X',
+    //'Z',
+    //'X',
     'C',
-    'V',
+    //'V',
     'B',
     'N',
     'M',
@@ -52,13 +52,32 @@ for (let i = 0; i < numLettersInGrid; i++) {
     arrayLetters9x9[i] = [letters[Math.floor(Math.random()*letters.length)]] // random letters for now...
 }
 
+let wordArray2 = []
+const handleWordLine = (letter, index, newLine) => {
+
+    console.log("handleWordLine index " + index)
+
+    if ( newLine === true || index > 5 )
+    {
+        wordArray2 = []
+
+        wordGuessRow.forEach((element, index) =>
+        {
+            const rowWordElement = document.createElement('div')
+            const buttonElement = document.createElement('button')
+            wordArray2.push(buttonElement)
+            rowWordElement.append(buttonElement)
+            wordDisplay.append(rowWordElement)
+        })
+    }
+
+    console.log(" wordArray2.length " + wordArray2.length)
+    wordArray2[index].textContent = letter
+}
+
 Generate3x3Grid()
 Populate3x3Grid( true )
-CreateWordLine()
 
-// generate 3x3 and figure out the letters for each position based on array of 88 letters
-//for each row in 3x3... create div, give attrib, for each letter in row, create button set ati, text =
-// current location (top left to bottom right).. startpos -11, startpos -10.. etc (check the current index)//
 function Generate3x3Grid()
 {
     letterGrid3x3.forEach((gridRow, gridRowIndex) =>
@@ -174,6 +193,7 @@ function Populate3x3Grid( resetGridToCentre )
             if ( resetGridToCentre === true )
             {
                 wordToCheck = buttonTextContent
+                handleWordLine( buttonTextContent, 0, true )
                 console.log("set starting letter " + wordToCheck)
                 indexesMarked.push( startPosition )
             }
@@ -265,13 +285,13 @@ function handleClick(event)
     // record what letter
     let clickedLetter = event.currentTarget.getAttribute('buttonTextContent')
     wordToCheck = wordToCheck + clickedLetter
-    console.log("wordToCheck " + wordToCheck)
+    //console.log("wordToCheck " + wordToCheck)
 
     indexesMarked.push( parseInt(event.currentTarget.getAttribute('letterIndex')) )
     //console.log("indexesMarked " + indexesMarked)
 
-    // populate letter line at the bottom // //-
-    AddLetterToWordLine()
+    //console.log(" wordLength " +wordLength)
+    handleWordLine( clickedLetter, wordToCheck.length - 1, false )
 
     // check if the player has made a five-letter word
     if ( wordToCheck.length === 5 )
@@ -284,9 +304,6 @@ function handleClick(event)
                 showMessage("Word complete!")
                 console.log("Word complete!")
 
-                // start new line and make this word all green tiles in both grid and letter line // //
-
-
                 Populate3x3Grid( true )
                 return
             }
@@ -296,12 +313,7 @@ function handleClick(event)
         console.log("Word not found! Resetting board...")
         showMessage("Word not found! Resetting board...")
 
-        // start new line and make this word all red tiles in both the grid and the letter line
-
-
-
         Populate3x3Grid( true )
-        //wordToCheck = ""
         return
     }
 
@@ -321,22 +333,6 @@ function Check9x9IndexAndMark( button )
             button.classList.add('yellow-overlay')
         }
     }
-}
-
-function AddLetterToWordLine()
-{
-
-}
-
-function CreateWordLine()
-{
-    wordGuessRow.forEach((element, index) =>
-    {
-        const rowWordElement = document.createElement('div')
-        const buttonElement = document.createElement('button')
-        rowWordElement.append(buttonElement)
-        wordDisplay.append(rowWordElement)
-    })
 }
 
 const showMessage = (message) => {
