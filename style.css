@@ -36,9 +36,13 @@ body {
     align-items: center;
 }
 
+.timer-container{
+    height: 50px;
+}
+
 .tile-container {
     width: 400px;
-    margin-bottom: 30px;
+    margin-bottom: 1px;
 }
 
 .tile-container div {
@@ -178,10 +182,6 @@ button{
     border: none;
     background-color: rgba(129, 131, 132, 0.55);
     margin: 4px;
-}
-
-.timer-container{
-    height: 100px;
 }
 
 .modal {

@@ -5,10 +5,10 @@ const overlay = document.getElementById('overlay')
 const modal = document.getElementById('modal')
 const modalButton = document.getElementById('modalButton')
 
+let startButtonElement = null
 const timerDisplay = document.querySelector('.timer-container')
-const minutesLabel = document.getElementById("minutes");
-const secondsLabel = document.getElementById("seconds");
-const millisecondsLabel = document.getElementById("milliseconds");
+let minutesLabel = null
+let secondsLabel = null
 
 const letters = [
     //'Q',
@@ -47,7 +47,7 @@ const resetStartPosition = 41
 let startPosition = resetStartPosition
 let wordToCheck = ""
 let indexesMarked = []
-let totalmilliseconds = 120 //* 1000;
+let totalSecondsTimer = 120;
 const letterGrid3x3 =
 [
     ['', '', ''],
@@ -58,15 +58,21 @@ const wordGuessRow = ['', '', '', '', '']
 
 // API fetch  grid
 for (let i = 0; i < numLettersInGrid; i++) {
+
+    // if an array of x letters is sent and an int start position we can support any grid size
+
     arrayLetters9x9[i] = [letters[Math.floor(Math.random()*letters.length)]] // random letters for now...
 }
 
-// create start button
-const startButtonElement = document.createElement('button')
-startButtonElement.classList.add('startButton')
-timerDisplay.append(startButtonElement)
-startButtonElement.textContent = "Start"
-startButtonElement.addEventListener('click', startHandleClick)
+function CreateStartButton()
+{
+    // create start button
+    startButtonElement = document.createElement('button')
+    startButtonElement.classList.add('startButton')
+    timerDisplay.append(startButtonElement)
+    startButtonElement.textContent = "Start"
+    startButtonElement.addEventListener('click', startHandleClick)
+}
 
 // handles generating the word line
 let wordLineArray = []
@@ -94,6 +100,7 @@ const handleWordLine = (letter, index, newLine) => {
     wordLineArray[index].classList.add('flip')
 }
 
+CreateStartButton()
 Generate3x3Grid()
 
 // handles clicking the start buton
@@ -101,40 +108,36 @@ let countdownTimer = null;
 function startHandleClick(event)
 {
     startButtonElement.parentNode.removeChild(startButtonElement);
-    countdownTimer = setInterval(setTime, 10);
+
+    // create timer div and timer labels....
+    let minutes = document.createElement('div')
+    let seconds = document.createElement('div')
+
+    minutesLabel = document.createElement('label')
+    secondsLabel = document.createElement('label')
+
+    minutes.append(minutesLabel)
+    seconds.append(secondsLabel)
+
+    timerDisplay.append(minutes)
+    timerDisplay.append(seconds)
+
+    countdownTimer = setInterval(setTime, 1000);
     Populate3x3Grid( true )
 }
 
 // countdown timer
-let milliseconds = 0;
-let seconds = 0;
-let minutes = 0;
 function setTime()
 {
-    --totalmilliseconds;
+    --totalSecondsTimer;
 
-    minutes = (seconds / 60).toFixed(0)
-    seconds = (totalmilliseconds / 1000).toFixed(0)
-    milliseconds = (seconds / 1000).toFixed(0)
+    secondsLabel.textContent = pad(totalSecondsTimer % 60);
+    minutesLabel.textContent = pad(parseInt(totalSecondsTimer / 60));
 
-    minutesLabel.textContent = pad(minutes);
-    secondsLabel.textContent = pad(seconds);
-    millisecondsLabel.textContent = pad(milliseconds);
-
-    if(totalmilliseconds  <= 0 )
+    if(totalSecondsTimer  <= 0 )
     {
         clearInterval(countdownTimer);
         EndGamePrompt()
-    }
-}
-
-function pad(val)
-{
-    let valString = val + "";
-    if (valString.length < 2) {
-        return "0" + valString;
-    } else {
-        return valString;
     }
 }
 
@@ -460,4 +463,13 @@ function CloseModal()
     console.log("close modal")
     modal.classList.remove('active')
     overlay.classList.remove('active')
+}
+
+function pad(val) {
+    let valString = val + "";
+    if (valString.length < 2) {
+        return "0" + valString;
+    } else {
+        return valString;
+    }
 }
