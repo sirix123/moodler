@@ -2,8 +2,14 @@ const tileDisplay = document.querySelector('.tile-container')
 const messageDisplay = document.querySelector('.message-container')
 const wordDisplay = document.querySelector('.word-container')
 const overlay = document.getElementById('overlay')
-const modal = document.getElementById('modal')
-const modalButton = document.getElementById('modalButton')
+
+const modalEndGame = document.getElementById('modal-endgame')
+const modalButtonEndGame = document.getElementById('modalButtonEndGame')
+
+const modalHelp = document.getElementById('modal-help')
+const helpMenuButton = document.getElementById('help-button')
+
+const modalCloseHelpButton = document.getElementById('modalButtonHelp')
 const timerContainer = document.getElementById('timer-container')
 
 let startButtonElement = null
@@ -26,6 +32,8 @@ const letterGrid3x3 = [
     ['', '', '']
 ]
 const wordGuessRow = ['', '', '', '', '']
+
+helpMenuButton.addEventListener('click', OpenHelpModal)
 
 function CreateStartButton()
 {
@@ -446,18 +454,33 @@ function EndGamePrompt()
     showMessage('Game Complete!')
 
     // pop up the modal
-    modal.classList.add('active')
+    modalEndGame.classList.add('active')
     overlay.classList.add('active')
-    modalButton.addEventListener('click', CloseModal)
+    modalButtonEndGame.addEventListener('click', CloseModal)
 
     // remove interactiveness from the grid
-    //remove clicking on the buttons
+    //remove clicking on the buttons //
 }
 
 function CloseModal()
 {
     console.log("close modal")
-    modal.classList.remove('active')
+    modalEndGame.classList.remove('active')
+    overlay.classList.remove('active')
+}
+
+function OpenHelpModal()
+{
+    console.log("open help modal")
+
+    modalHelp.classList.add('active')
+    overlay.classList.add('active')
+    modalCloseHelpButton.addEventListener('click', CloseHelpModal)
+}
+
+function CloseHelpModal()
+{
+    modalHelp.classList.remove('active')
     overlay.classList.remove('active')
 }
 
