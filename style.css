@@ -72,11 +72,37 @@ body {
     margin-right: 40px;
 }
 
-.timer-container button {
+.startButton{
     appearance: none;
     height: 100px;
     width: 250px;
     background-color: #2ea44f;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.startButtonDisable{
+    appearance: none;
+    height: 100px;
+    width: 250px;
+    background-color: #8e9390;
     border: 1px solid rgba(27, 31, 35, .15);
     border-radius: 6px;
     box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
