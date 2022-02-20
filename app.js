@@ -5,9 +5,11 @@ const overlay = document.getElementById('overlay')
 
 const modalEndGame = document.getElementById('modal-endgame')
 const modalButtonEndGame = document.getElementById('modalButtonEndGame')
+let modalShareButton = document.getElementById('share-button')
 
 const modalHelp = document.getElementById('modal-help')
 const helpMenuButton = document.getElementById('help-button')
+const shareMenuButton = document.getElementById('help-menu-right-button')
 
 const modalCloseHelpButton = document.getElementById('modalButtonHelp')
 const timerContainer = document.getElementById('timer-container')
@@ -25,7 +27,7 @@ let resetStartPosition = 41
 let startPosition = resetStartPosition
 let wordToCheck = ""
 let indexesMarked = []
-let totalSecondsTimer = 120;
+let totalSecondsTimer = 1;
 const letterGrid3x3 = [
     ['', '', ''],
     ['', '', ''],
@@ -34,6 +36,7 @@ const letterGrid3x3 = [
 const wordGuessRow = ['', '', '', '', '']
 
 helpMenuButton.addEventListener('click', OpenHelpModal)
+shareMenuButton.addEventListener('click', ShareGameModal)
 
 function CreateStartButton()
 {
@@ -453,13 +456,58 @@ function EndGamePrompt()
 {
     showMessage('Game Complete!')
 
+    ActivateEndGameModal()
+
+    // remove interactiveness from the grid
+    let elements = document.getElementsByClassName('tile');
+
+    for (let i = 0; i < elements.length; i++)
+    {
+        elements.item(i).removeEventListener('click', () =>handleClick());
+        elements.item(i).disabled = true
+        elements.item(i).classList.remove('yellow-overlay')
+        elements.item(i).textContent = ""
+    }
+}
+
+function ShareGameModal()
+{
+    ActivateEndGameModal()
+
+
+}
+
+function ActivateEndGameModal()
+{
     // pop up the modal
     modalEndGame.classList.add('active')
     overlay.classList.add('active')
     modalButtonEndGame.addEventListener('click', CloseModal)
+    modalShareButton.addEventListener('click', onClickShareHandle)
+}
 
-    // remove interactiveness from the grid
-    //remove clicking on the buttons //
+function onClickShareHandle()
+{
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0');
+    let yyyy = today.getFullYear();
+    today = mm + '/' + dd + '/' + yyyy;
+
+    //let shareButton = document.getElementById("share-button");
+    //shareButton.innerHTML =  today + ":" + " Moodler score = " + wordCount
+
+    let shareText = today + ":" + " Moodler score = " + wordCount
+
+    navigator.clipboard.writeText(shareText)
+        .then(() => {
+            console.log("Text copied to clipboard...")
+            /* Alert the copied text */
+            alert("Copied the text: " + shareText);
+        })
+        .catch(err => {
+            console.log('Something went wrong', err);
+        })
 }
 
 function CloseModal()
