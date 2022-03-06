@@ -356,6 +356,9 @@ body {
 }
 
 .modal-close-button {
+    width: 30px;
+    height: 30px;
+    border: 1pw solid black !important;
     cursor: pointer;
     border: none;
     outline: none;
@@ -363,7 +366,6 @@ body {
     font-size: 1.25rem;
     font-weight: bold;
     color: #000000;
-    background: #ff0000;
 }
 
 .modal-share-button{
