@@ -369,34 +369,32 @@ function handleClick(event)
     handleWordLine( clickedLetter, wordToCheck.length - 1, false)
 
     // check if the player has made a five-letter word
+    let wordFound = false;
     if ( wordToCheck.length === 5 )
     {
         // check if word exists ...
+        
         words.forEach((_word , index) =>
         {
             if ( _word === wordToCheck )
             {
-                showMessage("Word complete!")
+                showMessage("Word complete!");
 
-                wordCount ++
-                wordCountLabelElement.textContent = wordCount.toString()
+                wordCount ++;
+                wordCountLabelElement.textContent = wordCount.toString();
                 //console.log("Word complete!")
 
-                ColourWordLine(true)
-
-                Populate3x3Grid( true )
+                wordFound = true;
                 return
             }
         })
 
-        // word doesn't match anything...
-        //console.log("Word not found! Resetting board...")
-        showMessage("Word not found! Resetting board...")
+        if (!wordFound)
+            showMessage("Word not found! Resetting board...")
+        ColourWordLine(wordFound);
+        Populate3x3Grid( true );
+        return;
 
-        ColourWordLine(false)
-
-        Populate3x3Grid( true )
-        return
     }
 
     startPosition = parseInt(event.currentTarget.getAttribute('letterIndex'))
