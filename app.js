@@ -27,7 +27,6 @@ let resetStartPosition = 41
 let startPosition = resetStartPosition
 let wordToCheck = ""
 let indexesMarked = []
-let totalSecondsTimer = 1;
 const letterGrid3x3 = [
     ['', '', ''],
     ['', '', ''],
@@ -38,6 +37,7 @@ const wordGuessRow = ['', '', '', '', '']
 helpMenuButton.addEventListener('click', OpenHelpModal)
 shareMenuButton.addEventListener('click', ShareGameModal)
 
+let totalSecondsTimer = 120;
 function CreateStartButton()
 {
     // create start button
