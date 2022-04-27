@@ -27,6 +27,7 @@ let resetStartPosition = 41
 let startPosition = resetStartPosition
 let wordToCheck = ""
 let indexesMarked = []
+let wordsMade = []
 const letterGrid3x3 = [
     ['', '', ''],
     ['', '', ''],
@@ -370,28 +371,47 @@ function handleClick(event)
 
     // check if the player has made a five-letter word
     let wordFound = false;
+    let wordDuplicate = false;
     if ( wordToCheck.length === 5 )
     {
-        // check if word exists ...
-        
-        words.forEach((_word , index) =>
+        // check if word has been made already
+        wordsMade.forEach((_word , index) =>
         {
             if ( _word === wordToCheck )
             {
-                showMessage("Word complete!");
-
-                wordCount ++;
-                wordCountLabelElement.textContent = wordCount.toString();
-                //console.log("Word complete!")
-
+                showMessage("Duplicate word!!");
+                ColourWordLine('shake','purple-overlay');
+                wordDuplicate = true;
                 wordFound = true;
-                return
             }
         })
 
+        // check if word exists ...
+        if (!wordDuplicate)
+        {
+            words.forEach((_word, index) => {
+                if (_word === wordToCheck) {
+                    showMessage("Word complete!");
+
+                    wordCount++;
+                    wordCountLabelElement.textContent = wordCount.toString();
+                    wordsMade.push(_word);
+                    //console.log("Word complete!")
+
+                    ColourWordLine('dance', 'green-overlay');
+
+                    wordFound = true;
+                    return
+                }
+            })
+        }
+
         if (!wordFound)
-            showMessage("Word not found! Resetting board...")
-        ColourWordLine(wordFound);
+        {
+            showMessage("Word not found or duplicate! Resetting board...")
+            ColourWordLine('shake','red-overlay');
+        }
+
         Populate3x3Grid( true );
         return;
 
@@ -415,32 +435,28 @@ function Check9x9IndexAndMark( button )
     }
 }
 
-function ColourWordLine( wordCorrect )
+function ColourWordLine( animation, color )
 {
-
-    if( wordCorrect === true )
+    wordLineArray.forEach((element, index ) =>
     {
-        wordLineArray.forEach((element, index ) =>
+        setTimeout(() =>
         {
-            setTimeout(() =>
-            {
-                element.classList.add('dance')
-                element.classList.add('green-overlay')
-            }, 100 * index)
-        })
-    }
+            element.classList.add(animation)
+            element.classList.add(color)
+        }, 100 * index)
+    })
 
-    if( wordCorrect === false )
-    {
-        wordLineArray.forEach((element, index) =>
-        {
-            setTimeout(() =>
-            {
-                element.classList.add('shake')
-                element.classList.add('red-overlay')
-            }, 100 * index)
-        })
-    }
+    // if( wordCorrect === false )
+    // {
+    //     wordLineArray.forEach((element, index) =>
+    //     {
+    //         setTimeout(() =>
+    //         {
+    //             element.classList.add('shake')
+    //             element.classList.add('red-overlay')
+    //         }, 100 * index)
+    //     })
+    // }
 }
 
 const showMessage = (message) => {
