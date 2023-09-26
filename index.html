@@ -4,63 +4,119 @@
 <head>
     <meta charset="UTF-8">
     <title>Moodle</title>
-    <link rel="stylesheet" href="style.css"/>
+    <style>
+
+        /* container for game */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* grid */
+
+        .grid-container {
+            margin: 5px 0;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(9, 40px);
+            grid-template-rows: repeat(9, 40px);
+            gap: 5px;
+        }
+
+        .grid-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            border: 1px solid #000;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+        }
+
+        .grid-item:hover {
+            background-color: #eee;
+        }
+
+        .active {
+            background-color: #0de2f183;
+        }
+
+        .selected {
+            background-color: #f1ed0d83;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* word & count container */
+        .word-count-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        /* count */
+        .count{
+            margin-left: 20px;
+        }
+
+        /* word */
+
+        .word-container {
+            margin: 5px 0;
+        }
+
+        .word-line {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            font-size: 12px;
+            border: 1px solid #000;
+            cursor: pointer;
+            width: 206px;
+            height: 40px;
+        }
+
+        .word-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            border: 1px solid #000;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+        }
+        
+    </style>
 </head>
 <body>
 
-<div class="title-container">
-    <div class="menu-left">
-        <button id ="help-button" class="help-button">
-            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                <path fill="#ffffff" d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"></path>
-            </svg>
-        </button>
-    </div>
-    <h1>Moodler</h1>
-    <div class="menu-right">
-        <button id ="help-menu-right-button" class="help-button">
-            <img src="img/moodle_png.png" alt="moodler_icon">
-        </button>
-    </div>
-</div>
+    <div class = "container">
+        <div class="grid-container" id="gridContainer">
+            <div class="grid" id="grid">
+                <!-- Each div with the class "grid-item" represents a cell in the 9x9 grid -->
+            </div>
+        </div>
 
-<div class="game-container">
-    <div class="timer-container" id ="timer-container"></div>
-    <div class="tile-container"></div>
-    <div class="message-container"></div>
-    <div class="word-container"></div>
-</div>
-
-<div class="modal-endgame" id="modal-endgame">
-    <div class="modal-header">
-        <div class="title">Example Modal</div>
-        <button id ="modalButtonEndGame" class="modal-close-button">X</button>
+        <div class="word-count-container" id="wordCountContainer">
+            <div class="word-container" id="wordContainer">
+                <!-- Each div with the class "word-line" represents a word -->
+                    <!-- Each div with the class "word-item" represents a letter in the word -->
+            </div>
+            <div class="count-container" id="countContainer">
+                <div class="count" id="count-heading">Found word count:</div>
+                <div class="count" id="count">0</div>
+            </div>
+        </div>
     </div>
-    <div class="modal-body">
-        <p> Game Complete! </p>
-        <hr>
-        <button id ="share-button" class="modal-share-button">Share</button>
-    </div>
-</div>
 
-<div class="modal-help" id="modal-help">
-    <div class="modal-header">
-        <div class="title">HOW TO PLAY</div>
-        <button id ="modalButtonHelp" class="modal-close-button">&times;</button>
-    </div>
-    <div class="modal-body">
-        <p> You have 2 minutes to guess as many 5-letter words as you can. </p>
-        <p> After every 5 letters selected the grid resets back to the starting letter. </p>
-        <hr>
-        <h3> Example </h3>
-        <img src="img/placeholder.png" alt="game example" width="100" height="200" >
-        <hr>
-        <p> A new grid is available every day. </p>
-    </div>
-</div>
-
-<div id="overlay"></div>
-
-<script src="app.js"></script>
+<script src="app2.js"></script>
 </body>
 </html>
